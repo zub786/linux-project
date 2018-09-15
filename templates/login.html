@@ -1,0 +1,241 @@
+
+
+<head>
+  <title>Catalog App Sign in</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->  
+  <link rel="icon" type="image/png" href="/static/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/static/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/static/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/static/vendor/animate/animate.css">
+<!--===============================================================================================-->  
+  <link rel="stylesheet" type="text/css" href="/static/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/static/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/static/vendor/select2/select2.min.css">
+<!--===============================================================================================-->  
+  <link rel="stylesheet" type="text/css" href="/static/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/static/css/util.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+<!--===============================================================================================-->
+
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
+  </script>
+
+<script src="//apis.google.com/js/platform.js?onload=start"> </script>
+
+
+<!--FACEBOOK SIGN IN -->
+<script>
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '458607534607597',
+    cookie     : true,  // enable cookies to allow the server to access 
+                        // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.2' // use version 2.2
+  });
+  };
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+  // Here we run a very simple test of the Graph API after login is
+  // successful.  See statusChangeCallback() for when this call is made.
+  function sendTokenToServer() {
+    var access_token = FB.getAuthResponse()['accessToken'];
+    console.log(access_token)
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+     $.ajax({
+      type: 'POST',
+      url: '/fbconnect?state={{STATE}}',
+      processData: false,
+      data: access_token,
+      contentType: 'application/octet-stream; charset=utf-8',
+      success: function(result) {
+        // Handle or verify the server response if necessary.
+        if (result) {
+          $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
+         setTimeout(function() {
+          window.location.href = "/";
+         }, 4000);
+          
+      } else {
+        $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+         }
+      }
+      
+  });
+    });
+  }
+</script>
+
+<!--END FACEBOOK SIGN IN -->
+
+<!--START GMAIL SIGN IN -->
+ <script>
+function signInCallback(authResult) {
+  debugger;
+  if (authResult['code']) {
+    // Hide the sign-in button now that the user is authorized
+    $('#signinButton').attr('style', 'display: none');
+    // Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main restaurants page
+    $.ajax({
+      type: 'POST',
+      url: '/gconnect?state={{STATE}}',
+      processData: false,
+      data: authResult['code'],
+      contentType: 'application/octet-stream; charset=utf-8',
+      success: function(result) {
+        // Handle or verify the server response if necessary.
+        if (result) {
+          $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
+         setTimeout(function() {
+          window.location.href = '/';
+         }, 4000);
+          
+      } else if (authResult['error']) {
+    console.log('There was an error: ' + authResult['error']);
+  } else {
+        $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+         }
+      }
+      
+  }); } }
+</script> 
+<!--END GMAIL SIGN IN -->
+
+
+</head>
+<body id="result">
+  
+  <div class="limiter">
+    <div class="container-login100" style="background-image: url('/static/images/bg-01.jpg');">
+      <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
+        <form class="login100-form validate-form flex-sb flex-w" action = "/login" method = "POST">
+          <span class="login100-form-title p-b-53">
+            Sign In With
+          </span>
+
+          
+
+          
+            <span class="oauthspan">
+           <div id="signinButton">
+
+          <span class="g-signin"
+            data-scope="openid email"
+            data-clientid="5403145670-pk3dj2s5qktkc3s3bbo9jtkun0mk7uof.apps.googleusercontent.com"
+            data-redirecturi="postmessage"
+            data-accesstype="offline"
+            data-cookiepolicy="single_host_origin"
+            data-callback="signInCallback"
+            data-approvalprompt="force">
+          </span>
+        </div>
+           </span>
+
+
+<span class="oauthspan">
+           <fb:login-button scope="public_profile,email" onlogin="sendTokenToServer();">
+<a href='javascript:sendTokenToServer()'>Login with Facebook</a>
+
+</fb:login-button> 
+          </span>
+
+           <br>
+          <div class="p-t-31 p-b-9">
+            <span class="txt1">
+              Email *
+            </span>
+          </div>
+          <div class="wrap-input100 validate-input" data-validate = "Username is required">
+            <input class="input100" type="text" name="username" >
+            <span class="focus-input100"></span>
+          </div>
+          
+          <div class="p-t-13 p-b-9">
+            <span class="txt1">
+              Password *
+            </span>
+          </div>
+          <div class="wrap-input100 validate-input" data-validate = "Password is required">
+            <input class="input100" type="password" name="password" >
+            <span class="focus-input100"></span>
+          </div>
+{% with messages = get_flashed_messages() %}
+
+{% if messages %}
+
+
+{% for i in messages %}
+
+<p class="text-danger"> {{i}} </p> 
+
+{% endfor %}
+
+{% endif %}
+
+
+{% endwith %}
+          <div class="container-login100-form-btn m-t-17">
+            <button class="login100-form-btn">
+              Sign In
+            </button>
+          </div>
+          <div class="container-login100-form-btn m-t-17">
+            <!-- <button class="login100-form-btn">
+              Back To Home
+            </button> -->
+            <a class="login100-form-btn" href="/">Back To Home</a>
+          </div>
+
+          <div class="w-full text-center p-t-55">
+            <span class="txt2">
+              Not a member?
+            </span>
+
+            <a href="/signup" class="txt2 bo1">
+              Sign up now
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+
+  <div id="dropDownSelect1"></div>
+  
+<!--===============================================================================================-->
+  <script src="/static/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+  <script src="/static/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+  <script src="/static/vendor/bootstrap/js/popper.js"></script>
+  <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+  <script src="/static/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+  <script src="/static/vendor/daterangepicker/moment.min.js"></script>
+  <script src="/static/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+  <script src="/static/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+  <script src="/static/js/main.js"></script>
+

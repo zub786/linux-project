@@ -1,0 +1,23 @@
+{% extends "_Layout.html"  %}
+{% block content %}
+
+<div class="item">
+<h2> Add new item </h2>
+<form method='POST' action='/category/{{category_id}}/item/new'>
+	<p><lable> <strong>Name:</strong> </lable></p>
+	<input name='name' type='text' class="form-control" required>
+	<p><lable> <strong>Description:</strong> </lable></p>
+	<textarea name='description' class="form-control" required> </textarea>
+	<p><lable> <strong>Price:</strong> </lable></p>
+	<input name='price' type='text'  class="form-control" required>
+	
+<br>
+	<br>
+	<input type='submit' value='Create'  class="btn btn-primary"/>
+	
+
+	<a href={{ url_for('showCategories', category_id = category_id) }} class="btn btn-primary"> Cancel </a>
+
+
+</form>
+{% endblock  %}

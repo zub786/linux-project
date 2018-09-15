@@ -1,0 +1,11 @@
+{% extends "_Layout.html"  %}
+{% block content %}
+
+<h2> Edit item </h2>
+<form method='POST' action={{url_for('editCategory', category_id = category.id)}}>
+
+	<input name='name' value={{category.name}} type='text'/>
+	<input class="btn btn-sm btn-primary" type='submit' value='Update'/> | <a  class="btn btn-sm btn-primary" href={{url_for('showCategories')}}>Cancel</a>
+
+</form>
+{% endblock  %}

@@ -1,0 +1,26 @@
+{% extends "_Layout.html"  %}
+{% block content %}
+
+<div class="item">
+<h2> Delete item </h2>
+{% with messages = get_flashed_messages() %}
+
+{% if messages %}
+
+
+{% for i in messages %}
+
+<p class="alert alert-danger message"> {{i}} </p> 
+
+{% endfor %}
+
+{% endif %}
+{% endwith %}
+<form method='POST' action={{url_for('deleteItem', category_id = category.id, item_id = item.id)}}>
+<p>Are you sure?<br>Do you want to delete {{item.name}}? </p>
+	
+	<input class="btn btn-sm btn-primary" type='submit' value='Yes'/>
+	<a class="btn btn-sm btn-primary" href={{ url_for('showItems', category_id = category.id) }}> No </a>
+
+</form>
+{% endblock  %}

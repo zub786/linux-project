@@ -1,0 +1,38 @@
+{% extends "_Layout.html"  %}
+{% block content %}
+
+<div class="item">
+<h2> Edit item </h2>
+{% with messages = get_flashed_messages() %}
+
+{% if messages %}
+
+
+{% for i in messages %}
+
+<p class="alert alert-danger message"> {{i}} </p> 
+
+{% endfor %}
+
+{% endif %}
+
+
+{% endwith %}
+<form method='POST' action={{url_for('editItem', category_id = category.id, item_id = item.id)}} >
+	<p><lable> <strong>Name:</strong> </lable></p>
+	<input name='name' value="{{item.name}}" type='text' class="form-control" required/>
+
+	<p><lable> <strong>Description:</strong> </lable></p>
+	<textarea name='description' type='text' style="resize: vertical;" class="form-control" required>{{item.description}}</textarea>
+
+	<p><lable> <strong>Price:</strong> </lable></p>
+	<input name='price' value="{{item.price}}" type='text' class="form-control" required/>
+	
+	
+	<br>
+
+	<br>
+	<input type='submit' value='Update'  class="btn btn-sm btn-primary"/> | <a  class="btn btn-sm btn-primary" href={{url_for('showItems', category_id = category.id)}}>Cancel</a>
+
+</form>
+{% endblock  %}

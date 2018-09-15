@@ -1,0 +1,19 @@
+{% extends "_Layout.html"  %}
+{% block content %}
+
+<div class="item">
+<h2> Add new category </h2>
+<form method='POST' action='/category/new/'>
+	<p><lable> Name: </lable></p>
+	<p><input name='name' type='text' class="form-control"/></p>
+	
+	
+	<br>
+	<input type='submit' value='Create' class="btn btn-sm btn-primary"/>
+	
+
+	<a href='/'  class="btn btn-sm btn-primary"> Cancel </a>
+
+
+</form>
+{% endblock  %}

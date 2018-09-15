@@ -1,0 +1,35 @@
+{% extends "_Layout.html"  %}
+{% block content %}
+
+
+<div class="row">
+<div class="col-md-12">
+<p style="text-align: right;">
+<a href={{url_for('showCategories', category_id = item.category_id)}}>Categories</a> / <a href={{url_for('showItems', category_id = item.category_id, item_id = item.id)}}>{{item.category.name}}</a>
+
+</p>
+</hr>
+<div>
+<h2>
+{{item.name}}
+</h2>
+
+<p>
+{{item.description}}
+</p>
+{% if item.description == ""%}
+<p>
+There is no description for {{item.name}}
+
+{% endif  %}
+</p>
+<p>
+<a href={{url_for('editItem', category_id = item.category_id, item_id = item.id)}} class="btn btn-sm btn-primary">Edit</a> | <a href={{url_for('deleteItem', category_id = item.category_id, item_id = item.id)}} class="btn btn-sm btn-primary">Delete</a>
+
+</p>
+</div>
+
+</div>
+</div>
+
+{% endblock  %}

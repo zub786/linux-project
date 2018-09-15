@@ -1,0 +1,72 @@
+{% extends "_Layout.html"  %}
+{% block content %}
+
+<!-- <a href = '{{url_for('newCategory') }}'> 
+Create New Category</a> -->
+
+
+{% with messages = get_flashed_messages() %}
+
+{% if messages %}
+
+
+{% for i in messages %}
+<p> {{i}} </p> 
+{% endfor %}
+
+{% endif %}
+
+
+{% endwith %}
+
+
+<div class="row">
+<div class="col-md-12">
+<div class="col-md-6">
+
+<span class="top-heading">
+Categories ({{categories|length}})
+</span>
+
+{% for i in categories %}
+<p>
+
+<a href='/category/{{i.id}}/item' style="color: orange;">{{i.name}}</a>
+</p>
+
+{% endfor %}
+{% if categories|length < 1 %}
+
+<p>
+There is no category.
+</p>
+
+{% endif %}
+
+
+</div>
+<div class="col-md-6">
+<span class="top-heading">
+Latest Items ({{items|length}})
+</span>
+{% for i in items %}
+<p>
+
+<a href='/item/{{i.id}}' style="color: orange;">{{i.name}}</a> <span style="font-style: italic;color: gray;"> ({{i.category.name}}) </span>
+</p>
+
+{% endfor %}
+{% if items|length < 1 %}
+
+<p>
+There is no category.
+</p>
+
+{% endif %}
+
+
+</div>
+</div>
+</div>
+
+{% endblock  %}

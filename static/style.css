@@ -1,0 +1,54 @@
+.top-heading {
+	font-family: "Helvetica Neue Bold", Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+	
+}
+.main-div{
+	border: 1px solid;
+    padding: 30px;
+    margin: 8px;
+    border-color: lightgray;
+}
+.item{
+	padding: 25px;
+    border: 5px solid lightgray;
+    margin: 15px;
+    border-radius: 20px;
+}
+.message{
+    text-align: center;
+    margin: 15px;
+}
+.user-img{
+	height: 50px;
+	width: 50px;
+}
+.morecontent span {
+    display: none;
+}
+.morelink {
+    display: block;
+}
+
+
+/*====================================Responsive css ===================*/
+@media only screen and (min-width:961px) and (max-width:1200px){
+	
+}
+@media only screen and (min-width:768px) and (max-width:960px){
+	
+}
+@media only screen and (min-width:100px) and (max-width:767px){
+	h1{
+	font-size: 28px;
+	}
+	h2{
+	font-size: 20px;
+	}
+}
+@media only screen and (min-width:100px) and (max-width:600px){
+	
+}
+@media only screen and (min-width:100px) and (max-width:480px){
+}
