@@ -76,7 +76,7 @@ class Item(Base):
         }
 
 
-engine = create_engine('sqlite:///catalogapp.db')
+engine = create_engine('sqlite:////var/www/LinuxProject/catalogapp.db')
 
 
 Base.metadata.create_all(engine)
