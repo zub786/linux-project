@@ -2,6 +2,7 @@ from flask import (Flask, render_template, request, redirect,
                    jsonify, url_for, flash, g,
                    session as login_session, make_response)
 from sqlalchemy import create_engine, asc
+import os
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from models import Base, Category, Item, User
@@ -22,12 +23,13 @@ Base = declarative_base()
 secret_key = ''.join(random.choice(
     string.ascii_uppercase + string.digits) for x in xrange(32))
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
 CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
+    open('/var/www/LinuxProject/client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Catalog App Application"
 
 # Connect to Database and create database session
-engine = create_engine('sqlite:///catalogapp.db')
+engine = create_engine('sqlite:////var/www/LinuxProject/catalogapp.db')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
